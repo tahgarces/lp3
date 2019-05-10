@@ -1,10 +1,13 @@
-package com.ifma.atividade01;
+package aula;
+
+
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,6 +26,7 @@ public class GuiLogin extends JFrame {
 	private JButton botaoLogar;
 	private JPasswordField jpSenha;
 	private JButton botaoCadastrar;
+	int tentativas = 3;
 	
 	
 	public GuiLogin() {
@@ -31,37 +35,45 @@ public class GuiLogin extends JFrame {
 	}
 	
 	public void inicializarComponentes() {
-		Color corFundo =  new Color(174, 214, 241);
-		Color corBtn =  new Color(52, 152, 219);
+		Color corFundo =  new Color(0, 172, 237);
+		Color corBtn =  new Color(0, 132, 180);
 		
 		setTitle("Login no Sistema");
-		setBounds(0,0,250, 200);
+		setBounds(0,0,500, 300);
+		setLocationRelativeTo(null);
 		setLayout(null);
-		setSize(400,400);
-		getContentPane().setBackground(corFundo);
-		
+		setSize(500,300);
+		getContentPane().setBackground(corFundo);		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		tfLogin = new JTextField(5);
 		labelLogin = new JLabel("Login: ");
+		labelLogin.setFont(new Font("Serif", Font.BOLD, 18));
+		JLabel lb = new JLabel(new ImageIcon("person.png"));
+		labelLogin.setForeground(Color.white);
 		jpSenha = new JPasswordField(5);
 		labelSenha = new JLabel("Senha: ");
+		labelSenha.setFont(new Font("Serif", Font.BOLD, 18));
+		labelSenha.setForeground(Color.white);
 		botaoLogar = new JButton("Logar");
-		botaoCadastrar = new JButton("Cadastrar");
+		botaoCadastrar = new JButton("Cancelar");
 		botaoLogar.setBackground(corBtn);
 		botaoLogar.setForeground(Color.white);
+		botaoLogar.setFont(new Font("Serif", Font.BOLD, 20));
 		
 		botaoCadastrar.setBackground(corBtn);
 		botaoCadastrar.setForeground(Color.white);
+		botaoCadastrar.setFont(new Font("Serif", Font.BOLD, 20));
 		
-		tfLogin.setBounds(150,100, 120, 25);
-		labelLogin.setBounds(80,100,80,25);
-		jpSenha.setBounds(150,140,120,25);
-		labelSenha.setBounds(80,140,80,25);
-		botaoLogar.setBounds(75, 190,100,25);
-		botaoCadastrar.setBounds(180, 190, 100,25);
+		tfLogin.setBounds(100,60, 300, 30);
+		labelLogin.setBounds(100,30,100,25);
+		jpSenha.setBounds(100,120,300,30);
+		labelSenha.setBounds(100,90,100,25);
+		botaoLogar.setBounds(100, 170,150,40);
+		botaoCadastrar.setBounds(250, 170, 150,40);
 		
-		
+		lb.setBounds(10,10,20,20);
+		add(lb);
 		add(tfLogin);
 		add(labelLogin);
 		add(jpSenha);
@@ -71,31 +83,42 @@ public class GuiLogin extends JFrame {
 	}
 	
 	public void definirEventos() {
+		
 		botaoLogar.addActionListener(new ActionListener() {			
 			public void actionPerformed(ActionEvent e) {
+				
 				String senha = String.valueOf(jpSenha.getPassword());
 				System.out.print(tfLogin.getText());
 				if(tfLogin.getText().equals("ifma1") && senha.equals("ifma1")) {
-					setVisible(false);
+					Menu mn = new Menu();
+					mn.setVisible(true);
+					dispose();
 				} else {
-					JOptionPane.showMessageDialog(null,  "Login ou senha incorretas!");
+					JOptionPane.showMessageDialog(null,  "Login ou senha incorretas! \n Tentativas restantes: "+ (tentativas-1));
+					tentativas -= 1;
+					if(tentativas <=0) {
+						JOptionPane.showMessageDialog(null,  "tentativas encerradas");
+						dispose();
+						
+					}
+					
 				}				
 			}			
 		});
 		
 		botaoCadastrar.addActionListener(new ActionListener() {			
 			public void actionPerformed(ActionEvent e) {
-				GuiCadastro cad = new GuiCadastro();
-				cad.setVisible(true);
-				setVisible(false);
+				//GuiCadastro cad = new GuiCadastro();
+				//cad.setVisible(true);
+				//setVisible(false);
 			}			
 		});
 	}
 	
-	public static void main(String [] args) {
-		GuiLogin gui = new GuiLogin();
-		gui.setVisible(true);
-	}
+//	public static void main(String [] args) {
+//		GuiLogin gui = new GuiLogin();
+//		gui.setVisible(true);
+//	}
 	
 
 }

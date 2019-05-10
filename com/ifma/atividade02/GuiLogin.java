@@ -1,4 +1,4 @@
-package com.ifma.atividade01;
+package com.ifma.atividade02;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
